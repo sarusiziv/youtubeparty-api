@@ -1,0 +1,3 @@
+from songs_rest_resource import Songs
+from song_rest_resource import Song
+from next_song_rest_resource import NextSong
