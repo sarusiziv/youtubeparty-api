@@ -14,18 +14,20 @@ songs_resource_kwargs = {
     'youtube_request_key': config.youtube_api.YOUTUBE_REQUEST_KEY,
     'youtube_request_part': config.youtube_api.YOUTUBE_REQUEST_PART,
     'data_arguments_list': config.requests_arguments.POST_SONG_REQUEST_ARGUMENTS,
-    'db_args': (config.db.DB_URL, config.db.DB_NAME, config.db.COLLECTION_NAME)
+    'db_args': (config.db.DB_URL, config.db.DB_NAME, config.db.SONGS_COLLECTION_NAME)
 }
 
 song_resource_kwargs = {
     'json_database_path': config.playlist.PLAYLIST_DATA_JSON_PATH,
     'data_arguments_list': config.requests_arguments.LIKE_SONG_REQUEST_ARGUMENTS,
-    'db_args': (config.db.DB_URL, config.db.DB_NAME, config.db.COLLECTION_NAME)
+    'db_args': (config.db.DB_URL, config.db.DB_NAME, config.db.SONGS_COLLECTION_NAME)
 
 }
 
 next_song_resource_kwargs = {
     'json_database_path': config.playlist.PLAYLIST_DATA_JSON_PATH,
+    'db_args': (config.db.DB_URL, config.db.DB_NAME, config.db.SONGS_COLLECTION_NAME)
+
 }
 
 api.add_resource(Songs, '/songs', resource_class_kwargs=songs_resource_kwargs)

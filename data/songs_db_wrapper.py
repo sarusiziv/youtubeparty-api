@@ -29,8 +29,7 @@ class SongsDbWrapper:
             songs_list.append(song)
         return json.loads(dumps(songs_list))
 
-    def get_song(self,song_id,user_id):
-        print user_id
+    def get_song(self, song_id):
         song = self.collection.find({'SongID': song_id})[0]
         return json.loads(dumps(song))
 
@@ -43,9 +42,23 @@ class SongsDbWrapper:
         self.collection.update_one({'SongID': song_path_id}, {"$set": updated_object}, upsert=False)
         return json.loads(dumps(updated_object))
 
+    def delete_song(self, song_path_id):
+        self.collection.delete_one({'SongID': song_path_id})
+
+    def get_top_rated_song(self):
+        songs = self.get_songs_data()
+        top_rated_song_id = songs[0]["SongID"]
+        top_rated_points = len(songs[0]["LikesUsers"]) - len(songs[0]["DislikesUsers"])
+        for song in songs:
+            points_count = len(song["LikesUsers"]) - len(song["DislikesUsers"])
+            if points_count > top_rated_points:
+                top_rated_song_id = song["SongID"]
+                top_rated_points = points_count
+        return self.get_song(top_rated_song_id)
+
+
 if __name__ == '__main__':
     songs_db = SongsDbWrapper('mongodb+srv://admin:SecPass1@cluster0-qpidy.mongodb.net/test',
                               "youtubeparty", "songs")
-    songs_db.add_song("test")
 
-    print songs_db.get_songs_data()
+    print songs_db.get_top_rated_song()

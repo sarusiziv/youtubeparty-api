@@ -27,7 +27,6 @@ class Songs(Resource):
 
     def _get_song_name_(self, song_id):
         self.request_data['id'] = song_id
-        print self.request_data
         try:
             response_as_json = requests.get(config.youtube_api.YOUTUBE_API_URL,
                                             params=self.request_data,

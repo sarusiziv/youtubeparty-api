@@ -1,5 +1,4 @@
 from flask_restful import reqparse, Resource
-
 from data import songs_db_wrapper
 
 
@@ -34,7 +33,6 @@ class Song(Resource):
         song_obj = self.songs_db.get_song(song_id, user_id)
         if user_id not in song_obj["DislikesUsers"]:
             song_obj["DislikesUsers"].append(user_id)
-            print song_obj
             self.songs_db.update_song(song_id, song_obj)
         return song_obj
 
